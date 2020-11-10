@@ -1,0 +1,44 @@
+{
+  "name": "kdb+ Tick",
+  "version": "3.5",
+  "slug": "kdb",
+  "description": "KDB Tick database holding hass events",
+  "url": "https://github.com/peteclarkez/hassio-kdb",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "advanced": true,
+  "init": false,
+  "startup": "services",
+  "boot": "auto",
+  "services": ["kdb:provide"],
+  "map": ["config:rw"],
+  "ports": {
+    "5010/tcp": 5010,
+    "5011/tcp": 5011,
+    "5012/tcp": 5012,
+    "5013/tcp": 5013
+  },
+  "options": {
+    "logins": [],
+    "anonymous": false,
+    "customize": {
+      "active": false,
+      "folder": "kdb-tick"
+    },
+    "certfile": "fullchain.pem",
+    "keyfile": "privkey.pem",
+    "require_certificate": false
+  },
+  "schema": {
+    "logins": [{ "username": "str", "password": "str" }],
+    "anonymous": "bool",
+    "customize": {
+      "active": "bool",
+      "folder": "str"
+    },
+    "cafile": "str?",
+    "certfile": "str",
+    "keyfile": "str",
+    "require_certificate": "bool"
+  },
+  "image": "homeassistant/{arch}-addon-git_pull"
+}
