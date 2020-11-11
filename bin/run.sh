@@ -1,8 +1,8 @@
 #!/bin/bash 
 cd /opt/kx/kdb-tick
 
-export LOGDIR=../data/log
 export DATADIR=../data
+export LOGDIR=${DATADIR}/log
 export TICKSRC=hass
 
 mkdir -p ${DATADIR}/tplog
@@ -11,7 +11,7 @@ mkdir -p ${LOGDIR}
 touch ${LOGDIR}/tick.log
 
 #Tick
-nohup q tick.q ${TICKSRC} ${DATADIR}/tplog        -p 5010 < /dev/null > ${LOGDIR}/tick.log 2>&1 &  
+nohup q tick.q ${TICKSRC} ${DATADIR}/tplog         -p 5010 < /dev/null > ${LOGDIR}/tick.log 2>&1 &  
 #RDB
 nohup q tick/r.q :5010 :5012 ${DATADIR}/${TICKSRC} -p 5011 < /dev/null > ${LOGDIR}/rdb.log 2>&1 &
 #HDB
