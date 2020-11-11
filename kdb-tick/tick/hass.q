@@ -18,7 +18,7 @@ convertJsonTime:{[t] (`timestamp$1000000000*t)+`long$1970.01.01D00 };
 // @return null
  
  .u.updjson: {[t; d]
-   x:@[;`time`domain`entity_id`value`svalue`attributes] _[;`host] raze (_;@).\:((.j.k 0N!.p.d:d);`event);
+   x:@[;`time`domain`entity_id`value`svalue`attributes] _[;`host] raze (_;@).\:((.j.k .p.d:d);`event);
    tblData: flip(cols hass_event)!enlist each @ [;(enlist 0); convertJsonTime] @ [;(1 2);(`$)] x;
    updData: value flip tblData;
    .u.upd[t;updData]

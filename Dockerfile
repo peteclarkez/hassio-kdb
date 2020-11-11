@@ -20,6 +20,8 @@ RUN chmod 774 $Q_TICKHOME && \
     chmod 774 $Q_TICKHOME/tick && \
     chown -R kx:kx $Q_TICKHOME
 
+EXPOSE 5010 5011 5012
+
 ENTRYPOINT ["/init"]
 CMD ["/opt/kx/kdb-tick/run.sh"]
 
