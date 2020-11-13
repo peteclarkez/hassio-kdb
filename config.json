@@ -4,7 +4,7 @@
   "slug": "kdb",
   "description": "KDB Tick database holding hass events",
   "url": "https://github.com/peteclarkez/hassio-kdb",
-  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "arch": [ "armv7",  "amd64"],
   "advanced": true,
   "init": false,
   "startup": "services",
@@ -40,5 +40,5 @@
     "keyfile": "str",
     "require_certificate": "bool"
   },
-  "image": "homeassistant/{arch}-addon-git_pull"
+  "image": "homeassistant/{arch}-addon-kdb"
 }

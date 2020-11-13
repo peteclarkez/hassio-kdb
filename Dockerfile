@@ -21,6 +21,7 @@ RUN chmod 774 $Q_TICKHOME && \
     chown -R kx:kx $Q_TICKHOME
 
 EXPOSE 5010 5011 5012
+VOLUME /data
 
 ENTRYPOINT ["/init"]
 CMD ["/opt/kx/kdb-tick/run.sh"]

@@ -1,4 +1,6 @@
-# Home Assistant Add-on: Git pull
+# Home Assistant Add-on: KDB Tick
+
+> This doc needs to be updated
 
 ## Installation
 
@@ -17,26 +19,15 @@ your repository. Next,
 1. Start the add-on.
 2. Check the add-on log output to see the result.
 
-If the log doesn't end with an error, the add-on has successfully
-accessed your git repository. Examples of logs you might see if
-there were no errors are: `[Info] Nothing has changed.`,
-`[Info] Something has changed, checking Home-Assistant config...`,
-or `[Info] Local configuration has changed. Restart required.`.
-
-If you made it this far, you might want to let the add-on automatically
-check for updates by setting the `active` field (a subfield of `repeat`)
-to `true` and turning on "Start on boot."
+If the log doesn't end with an error
 
 ## Configuration
 
 Add-on configuration:
 
 ```yaml
-git_branch: master
-git_command: pull
-git_remote: origin
-git_prune: 'false'
-repository: https://example.com/my_configs.git
+logins: user
+anonymous": false
 auto_restart: false
 restart_ignore:
   - ui-lovelace.yaml
@@ -45,46 +36,15 @@ restart_ignore:
 repeat:
   active: false
   interval: 300
-deployment_user: ''
-deployment_password: ''
-deployment_key:
-  - "-----BEGIN RSA PRIVATE KEY-----"
-  - MIIEowIBAAKCAQEAv3hUrCvqGZKpXQ5ofxTOuH6pYSOZDsCqPqmaGBdUzBFgauQM
-  - xDEcoODGHIsWd7t9meAFqUtKXndeiKjfP0MMKsttnDohL1kb9mRvHre4VUqMsT5F
-  - "..."
-  - i3RUtnIHxGi1NqknIY56Hwa3id2yk7cEzvQGAAko/t6PCbe20AfmSQczs7wDNtBD
-  - HgXRyIqIXHYk2+5w+N2eunURIBqCI9uWYK/r81TMR6V84R+XhtvM
-  - "-----END RSA PRIVATE KEY-----"
-deployment_key_protocol: rsa
 ```
 
-### Option: `git_remote` (required)
+### Option: `logins` (required)
 
 Name of the tracked repository. Leave this as `origin` if you are unsure.
 
-### Option: `git_prune` (required)
+### Option: `anaymous` (required)
 
-`true`/`false`: If set to true, the add-on will clean-up branches that are deleted on the remote repository, but still have cached entries on the local machine. Leave this as `false` if you are unsure.
-
-### Option: `git_branch` (required)
-
-Branch name of the Git repo. If left empty, the currently checked out branch will be updated. Leave this as 'master' if you are unsure.
-
-### Option: `git_command` (required)
-
-`pull`/`reset`: Command to run. Leave this as `pull` if you are unsure.
-
-- `pull`
-  
-  - Incorporates changes from a remote repository into the current branch. Will preserve any local changes to tracked files.
-
-- `reset`
-  
-  - Will execute `git reset --hard` and overwrite any local changes to tracked files and update from the remote repository. **Warning**: Using `reset` WILL overwrite changes to tracked files. You can list all tracked files with this command: `git ls-tree -r master --name-only`.
-
-### Option: `repository` (required)
-
-Git URL to your repository (make sure to use double quotes).
+something
 
 ### Option: `auto_restart` (required)
 
@@ -105,29 +65,6 @@ The following options are for the option group: `repeat` and configure the Git p
 #### Option: `repeat.interval` (required)
 
 The interval in seconds to poll the repo for if automatic polling is enabled.
-
-### Option: `deployment_user` (optional)
-
-Username to use when authenticating to a repository with a username and password.
-
-### Option: `deployment_password` (optional)
-
-Password to use when authenticating to a repository.  Ignored if `deployment_user` is not set.
-
-### Option: `deployment_key` (optional)
-
-A private SSH key that will be used for communication during Git operations. This key is mandatory for ssh-accessed repositories, which are the ones with the following pattern: `<user>@<host>:<repository path>`. This key has to be created without a passphrase.
-
-### Option: `deployment_key_protocol` (optional)
-
-The key protocol. Default is `rsa`. Valid protocols are:
-
-- dsa
-- ecdsa
-- ed25519
-- rsa
-
-The protocol is typically known by the suffix of the private key --e.g., a key file named `id_rsa` will be a private key using `rsa` protocol.
 
 ## Support
 

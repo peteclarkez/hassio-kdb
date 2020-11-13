@@ -1,7 +1,7 @@
 #!/bin/bash 
 cd /opt/kx/kdb-tick
 
-export DATADIR=../data
+export DATADIR=/data
 export LOGDIR=${DATADIR}/log
 export TICKSRC=hass
 
