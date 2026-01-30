@@ -1,12 +1,5 @@
 {
   "build_from": {
-    "armhf": "homeassistant/armvhf-base-debian:buster",
-    "armv7": "homeassistant/armv7-base-debian:buster",
-    "amd64": "homeassistant/amd64-base-debian:buster"
-  },
-  "embedpy_from": {
-    "amd64": "kxsys/embedpy:latest",
-    "armhf": "peteclarkez/embedpypi:latest",
-    "armv7": "peteclarkez/embedpypi:latest"
+    "amd64": "homeassistant/amd64-base-debian:bookworm"
   }
 }
