@@ -1,8 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bashio
 # KDB-X Tick System Startup for Home Assistant
 # Starts tickerplant, RDB, HDB, and Gateway processes
 
+echo "START TICK RUNNER"
 set -e
+
+# Read configuration from Home Assistant add-on options
+CONFIG_PATH=/data/options.json
+# KX_LICENSE_B64="$(bashio::config 'KX_LICENSE_B64')"
+# KX_LICENSE_B64=$(bashio::config 'KX_LICENSE_B64')
+KX_LICENSE_B64=$(jq --raw-output '.KX_LICENSE_B64 // empty' $CONFIG_PATH)
 
 # Set KDB-X environment variables explicitly
 # (Dockerfile ENV may not be inherited in all cases)

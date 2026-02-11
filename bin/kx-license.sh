@@ -24,8 +24,8 @@ setup_kx_license() {
 
     # Decode and write the license file
     if echo "$license_b64" | base64 -d > "$kx_home/kc.lic" 2>/dev/null; then
-        echo "KX license updated from KX_LICENSE_B64 environment variable"
-        chmod 600 "$kx_home/kc.lic"
+        echo "KX license updated from KX_LICENSE_B64 environment variable to $kx_home/kc.lic as ${license_b64:0:30}... (truncated for security)"
+        chmod 644 "$kx_home/kc.lic"
         return 0
     else
         echo "Warning: Failed to decode KX_LICENSE_B64 - using existing license" >&2

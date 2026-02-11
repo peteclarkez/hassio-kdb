@@ -1,7 +1,8 @@
 # =============================================================================
 # Stage 1: Get KDB-X tick system from kdbx-tick image
 # =============================================================================
-FROM kdbx-tick:latest AS kdbx
+#FROM kdbx-tick:latest AS kdbx
+FROM peteclarkez/kdbx-tick:5.0.3 AS kdbx
 
 # =============================================================================
 # Stage 2: Home Assistant runtime
@@ -45,7 +46,7 @@ RUN chmod +x ${Q_TICKHOME}/run.sh ${Q_TICKHOME}/kx-license.sh
 COPY scripts/hass.q ${Q_TICKHOME}/scripts/
 
 # Home Assistant add-on labels
-LABEL io.hass.version="1.0.0"
+LABEL io.hass.version="5.0.3"
 LABEL io.hass.type="addon"
 LABEL io.hass.arch="amd64"
 
