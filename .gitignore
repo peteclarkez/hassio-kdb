@@ -4,3 +4,9 @@ test-data
 *.log
 *.env
 .vscode
+
+data/
+logs/
+tplogs/
+
+options.json

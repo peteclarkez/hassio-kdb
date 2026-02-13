@@ -53,12 +53,25 @@ docker build -t hassio-kdb .
 
 ```bash
 docker run -d \
-  -e  ="${KX_LICENSE_B64}" \
+  -e KX_LICENSE_B64="${KX_LICENSE_B64}" \
   -p 5010:5010 -p 5011:5011 -p 5012:5012 -p 5013:5013 \
-  -v $(pwd)/test-data:/data \
+  -v "$(pwd)/test-data:/data" \
+  --name hassio-kdb \
   hassio-kdb
 ```
 
+```bash
+docker run -d \ 
+  -e KX_LICENSE_B64="${KX_LICENSE_B64}" \
+  -p 5010:5010 -p 5011:5011 -p 5012:5012 -p 5013:5013 \
+  -v $(pwd)/test-data:/data \
+  --name hassio-kdb \
+  hassio-kdb
+
+  # Optional extra 
+  # -v ${pwd}/scripts:/opt/kx/kdb-tick/scripts
+  # -v ${pwd}/options.json /data/options.json
+```
 ## Data Schema
 
 The `hass_event` table stores Home Assistant events:

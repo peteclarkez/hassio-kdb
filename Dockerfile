@@ -42,8 +42,8 @@ COPY bin/kx-license.sh ${Q_TICKHOME}/
 COPY bin/run.sh ${Q_TICKHOME}/
 RUN chmod +x ${Q_TICKHOME}/run.sh ${Q_TICKHOME}/kx-license.sh
 
-# Copy Home Assistant schema (hass.q replaces sym.q for HA integration)
-COPY scripts/hass.q ${Q_TICKHOME}/scripts/
+# Copy Home Assistant schema (hass.q replaces sym.q for HA integration) and custom q files
+COPY scripts/*.q ${Q_TICKHOME}/scripts/
 
 # Home Assistant add-on labels
 LABEL io.hass.version="5.0.3"
