@@ -2,7 +2,7 @@
 # Stage 1: Get KDB-X tick system from kdbx-tick image
 # =============================================================================
 #FROM kdbx-tick:latest AS kdbx
-FROM peteclarkez/kdbx-tick:5.0.3 AS kdbx
+FROM peteclarkez/kdbx-tick:5.0.5 AS kdbx
 
 # =============================================================================
 # Stage 2: Home Assistant runtime
@@ -37,16 +37,15 @@ RUN mkdir -p ${Q_TICKHOME}/scripts \
     /data/tplog \
     /data/hass
 
-# Copy license handler and startup scripts
-COPY bin/kx-license.sh ${Q_TICKHOME}/
+# Copy HA-specific bootstrap wrapper
 COPY bin/run.sh ${Q_TICKHOME}/
-RUN chmod +x ${Q_TICKHOME}/run.sh ${Q_TICKHOME}/kx-license.sh
+RUN chmod +x ${Q_TICKHOME}/run.sh
 
 # Copy Home Assistant schema (hass.q replaces sym.q for HA integration) and custom q files
 COPY scripts/*.q ${Q_TICKHOME}/scripts/
 
 # Home Assistant add-on labels
-LABEL io.hass.version="5.0.3"
+LABEL io.hass.version="5.0.4"
 LABEL io.hass.type="addon"
 LABEL io.hass.arch="amd64"
 
