@@ -3,6 +3,7 @@
 KDB-X Tick database for storing Home Assistant events with high-performance time-series capabilities.
 
 ![Supports amd64 Architecture][amd64-shield]
+![Supports aarch64 Architecture][aarch64-shield]
 
 This add-on runs a complete KDB-X tick system that captures Home Assistant events and stores them in a time-series database for analysis and querying.
 
@@ -24,54 +25,34 @@ Home Assistant → .u.updjson → Tickerplant → RDB → HDB
 ## Requirements
 
 - **KDB-X License**: You need a valid KX license (base64 encoded) configured in the add-on options
-- **kdbx-tick Docker Image**: The `kdbx-tick:latest` image must be built locally before building this add-on
+- **kdbx-tick Docker Image**: The `peteclarkez/kdbx-tick` image (pulled automatically during build)
 
 ## Quick Start
 
-### 1. Build kdbx-tick image first
+### 1. Build locally
 
 ```bash
-
 export KX_LICENSE_B64=$(base64 -w0 ~/.kx/kc.lic)
 
-cd ../kdb-tick-docker
-source kdbx.env
-docker build \
-  --build-arg KX_BEARER_TOKEN="${KX_BEARER_TOKEN}" \
-  --build-arg KX_LICENSE_B64="${KX_LICENSE_B64}" \
-  -t kdbx-tick \
-  -f docker/Dockerfile .
-```
-
-### 2. Build this add-on
-
-```bash
 docker build -t hassio-kdb .
 ```
 
-### 3. Run
+### 2. Run
 
 ```bash
 docker run -d \
-  -e KX_LICENSE_B64="${KX_LICENSE_B64}" \
   -p 5010:5010 -p 5011:5011 -p 5012:5012 -p 5013:5013 \
   -v "$(pwd)/test-data:/data" \
   --name hassio-kdb \
   hassio-kdb
 ```
 
-```bash
-docker run -d \ 
-  -e KX_LICENSE_B64="${KX_LICENSE_B64}" \
-  -p 5010:5010 -p 5011:5011 -p 5012:5012 -p 5013:5013 \
-  -v $(pwd)/test-data:/data \
-  --name hassio-kdb \
-  hassio-kdb
+The upstream `peteclarkez/kdbx-tick` image is pulled automatically during the build.
 
-  # Optional extra 
-  # -v ${pwd}/scripts:/opt/kx/kdb-tick/scripts
-  # -v ${pwd}/options.json /data/options.json
-```
+### CI/CD
+
+Tagged releases (e.g. `v5.0.5`) automatically build and push multi-arch images
+(`amd64`, `aarch64`) to Docker Hub via GitHub Actions.
 ## Data Schema
 
 The `hass_event` table stores Home Assistant events:
@@ -112,3 +93,4 @@ h "rdbStats[]"
 ```
 
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
+[aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg

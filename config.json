@@ -1,6 +1,6 @@
 {
   "name": "KDB-X Tick",
-  "version": "5.0.4",
+  "version": "5.0.5",
   "slug": "kdbx-tick",
   "description": "KDB-X Tick database for Home Assistant events",
   "url": "https://github.com/peteclarkez/hassio-kdb",

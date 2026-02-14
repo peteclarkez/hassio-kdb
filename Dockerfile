@@ -45,9 +45,11 @@ RUN chmod +x ${Q_TICKHOME}/run.sh
 COPY scripts/*.q ${Q_TICKHOME}/scripts/
 
 # Home Assistant add-on labels
-LABEL io.hass.version="5.0.4"
+ARG BUILD_VERSION=dev
+ARG BUILD_ARCH=amd64
+LABEL io.hass.version="${BUILD_VERSION}"
 LABEL io.hass.type="addon"
-LABEL io.hass.arch="amd64"
+LABEL io.hass.arch="${BUILD_ARCH}"
 
 # Expose ports: Tickerplant, RDB, HDB, Gateway
 EXPOSE 5010 5011 5012 5013
