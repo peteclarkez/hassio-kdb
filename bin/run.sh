@@ -1,26 +1,29 @@
-#!/bin/bash 
-cd /opt/kx/kdb-tick
+#!/bin/bash
+# Home Assistant bootstrap wrapper for kdb-tick's tick.sh
+# Reads HA add-on config, sets environment variables, then delegates to tick.sh
 
-export DATADIR=/data
-export LOGDIR=${DATADIR}/log
-export TICKSRC=hass
+set -e
 
-mkdir -p ${DATADIR}/tplog
-mkdir -p ${DATADIR}/hass
-mkdir -p ${LOGDIR}
-touch ${LOGDIR}/tick.log
+# Read KX license from Home Assistant add-on options
+CONFIG_PATH=/data/options.json
+export KX_LICENSE_B64=$(jq --raw-output '.KX_LICENSE_B64 // empty' $CONFIG_PATH)
 
-#Tick
-nohup q tick.q ${TICKSRC} ${DATADIR}/tplog         -p 5010 < /dev/null > ${LOGDIR}/tick.log 2>&1 &  
-#RDB
-nohup q tick/r.q :5010 :5012 ${DATADIR}/${TICKSRC} -p 5011 < /dev/null > ${LOGDIR}/rdb.log 2>&1 &
-#HDB
-nohup q ${DATADIR}/${TICKSRC}                      -p 5012 < /dev/null > ${LOGDIR}/hdb.log 2>&1 &
-#Gateway
-#nohup q tick/gw.q     -p 5013 < /dev/null > ${LOGDIR}/gw.log 2>&1 &
-#HouseKeeping
-#nohup q tick/hk.q     -p 5014 < /dev/null > ${LOGDIR}/hk.log 2>&1 &
-#Feedhanler
-#nohup q tick/feed.q  < /dev/null > ${LOGDIR}feed.log 2>&1 &
+# Set KDB-X environment variables explicitly
+# (Dockerfile ENV may not be inherited in all cases)
+export QHOME=/opt/kx
+export QLIC=/opt/kx
+export PATH="/opt/kx/bin:${PATH}"
+export Q_TICKHOME=/opt/kx/kdb-tick
 
-tail -f ${LOGDIR}/tick.log
+# HA add-ons use /data as the single persistent volume,
+# so override the default mount points to subdirs under /data
+export TICK_DATA_DIR=/data/hass
+export TICK_LOG_DIR=/data/log
+export TICK_TPLOG_DIR=/data/tplog
+export TICK_SCRIPTS_DIR=/opt/kx/kdb-tick/scripts
+
+# Use hass.q schema instead of default sym.q
+export TICK_SCHEMA=hass
+
+# Delegate to the upstream tick.sh
+exec /opt/kx/kdb-tick/tick.sh

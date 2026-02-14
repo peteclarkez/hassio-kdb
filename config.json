@@ -1,32 +1,24 @@
 {
-  "name": "kdb+ Tick",
-  "version": "35.0.1",
-  "slug": "kdbtick",
-  "description": "KDB Tick database holding hass events",
+  "name": "KDB-X Tick",
+  "version": "5.0.5",
+  "slug": "kdbx-tick",
+  "description": "KDB-X Tick database for Home Assistant events",
   "url": "https://github.com/peteclarkez/hassio-kdb",
-  "arch": [ "armv7"],
-  "advanced": true,
-  "init": false,
-  "_startup": "services",
+  "arch": ["amd64"],
   "startup": "system",
   "boot": "auto",
-  "_services": ["kdb:provide"],
-  "map": ["config:rw"],
+  "init": false,
   "ports": {
     "5010/tcp": 5010,
     "5011/tcp": 5011,
-    "5012/tcp": 5012
+    "5012/tcp": 5012,
+    "5013/tcp": 5013
   },
+  "map": ["config:rw"],
   "options": {
-    "logins": [
-      { "username": "admin", "password": "123456" },
-      { "username": "cheep", "password": "654321" }
-    ],
-    "anonymous": false
+    "KX_LICENSE_B64": ""
   },
   "schema": {
-    "logins": [{ "username": "str", "password": "str" }],
-    "anonymous": "bool"
-  },
-  "image": "peteclarekz/hassio-kdb"
+    "KX_LICENSE_B64": "str?"
+  }
 }
